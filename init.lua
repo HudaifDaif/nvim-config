@@ -1,6 +1,6 @@
 --[[
 
-    TODO: Learn some basic Lua
+   TODO: Learn some basic Lua
      - https://learnxinyminutes.com/docs/lua/
 
     After understanding a bit more about Lua, you can use `:help lua-guide` as a
