@@ -902,8 +902,8 @@ require('lazy').setup({
 -- Create custom logs and attach to unnamed register (available on <p>) and attach symbol to 0 register
 function CustomLogger()
   local symbol = vim.fn.expand '<cword>'
-  local fileName = vim.fn.expand '%'
   local lineNumber = unpack(vim.api.nvim_win_get_cursor(0))
+  local fileName = vim.fn.expand '%'
   local fileExt = string.match(fileName, '^.+(%..+)$')
 
   vim.fn.setreg('0', symbol)
@@ -912,6 +912,17 @@ function CustomLogger()
     vim.fn.setreg('+', 'console.log("🚀 ' .. fileName .. ' @ line ' .. lineNumber .. ' - ' .. symbol .. ':", ' .. symbol .. ')')
   elseif fileExt == '.lua' then
     vim.fn.setreg('+', 'print("🚀 ' .. fileName .. ' @ line ' .. lineNumber .. ' - ' .. symbol .. ':", ' .. symbol .. ')')
+  end
+end
+
+function RemoveCustomLogs()
+  local fileName = vim.fn.expand '%'
+  local fileExt = string.match(fileName, '^.+(%..+)$')
+
+  if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
+    vim.cmd ":%s/^console.log.'🚀.*'.//g"
+  elseif fileExt == '.lua' then
+    vim.cmd ":%s/^print.'🚀.*'.//g"
   end
 end
 
@@ -927,6 +938,7 @@ vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
 
 vim.keymap.set('n', '<leader>cl', CustomLogger, { desc = '[C]reate [L]og' })
+vim.keymap.set('n', '<leader>c ', RemoveCustomLogs, { desc = '[C]lear[ ]logs' })
 
 vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = '[C]urrent symbol [R]ename' })
 
