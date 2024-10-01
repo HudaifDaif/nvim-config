@@ -119,15 +119,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- Open new terminal session within nvim.
-vim.keymap.set('n', '<leader>wt', '<cmd>tabnew | term<cr>', { desc = 'Open terminal in new tab' })
-
--- TIP: Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move left!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move right!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
-
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -267,6 +258,7 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
+        { '<leader>n', group = '[N]eovim' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
@@ -901,6 +893,42 @@ require('lazy').setup({
     },
   },
 })
+
+-- NOTE: My config below this line
+-- -------------------------------------------------------------------------------------------------------------------------
+
+-- NOTE: Functions
+
+-- Create custom logs and attach to unnamed register (available on <p>) and attach symbol to 0 register
+function CustomLogger()
+  local symbol = vim.fn.expand '<cword>'
+  local fileName = vim.fn.expand '%'
+  local lineNumber = unpack(vim.api.nvim_win_get_cursor(0))
+  local fileExt = string.match(fileName, '^.+(%..+)$')
+
+  vim.fn.setreg('0', symbol)
+
+  if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
+    vim.fn.setreg('+', 'console.log("🚀 ' .. fileName .. ' @ line ' .. lineNumber .. ' - ' .. symbol .. ':", ' .. symbol .. ')')
+  elseif fileExt == '.lua' then
+    vim.fn.setreg('+', 'print("🚀 ' .. fileName .. ' @ line ' .. lineNumber .. ' - ' .. symbol .. ':", ' .. symbol .. ')')
+  end
+end
+
+-- NOTE: Config
+
+-- Open new terminal session within nvim.
+vim.keymap.set('n', '<leader>wt', '<cmd>tabnew | term<cr>', { desc = 'Open terminal in new tab' })
+
+-- Reminder to use hjkl
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move left!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move right!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
+
+vim.keymap.set('n', '<leader>cl', CustomLogger, { desc = '[C]reate [L]og' })
+
+vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = '[C]urrent symbol [R]ename' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
