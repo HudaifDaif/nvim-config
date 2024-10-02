@@ -627,7 +627,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = false, cpp = true }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           lsp_format_opt = 'never'
@@ -645,7 +645,14 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        -- language = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'prettierd', 'prettier' },
+        typescript = { 'prettierd', 'prettier', 'ts-standard' },
+        javascriptreact = { 'prettierd', 'prettier' },
+        typescriptreact = { 'prettierd', 'prettier', 'ts-standard' },
+        bash = { 'beautysh' },
+        zsh = { 'beautysh' },
+        c = { 'ast-grep' },
       },
     },
   },
@@ -915,15 +922,14 @@ function CustomLogger()
   end
 end
 
+-- Remove all logs created by the CustomLogger function in open buffers
 function RemoveCustomLogs()
   local fileName = vim.fn.expand '%'
   local fileExt = string.match(fileName, '^.+(%..+)$')
 
-  if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
-    vim.cmd.bufdo('%s/^' .. '\\' .. '(' .. '\\' .. 's' .. '\\' .. ')*console.log([\'"]🚀.*[\'"], .*)//g')
-  elseif fileExt == '.lua' then
+  local function updateBuffer(pattern)
     local ok, result = pcall(function()
-      return vim.cmd.bufdo('%s/^' .. '\\' .. '(' .. '\\' .. 's' .. '\\' .. ')*print([\'"]🚀.*[\'"], .*)//g')
+      return vim.cmd.bufdo(pattern)
     end)
     if ok then
       print(result)
@@ -931,6 +937,12 @@ function RemoveCustomLogs()
       print 'No custom logs in active buffer'
     end
     require('conform').format { async = true }
+  end
+
+  if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
+    updateBuffer('%s/^' .. '\\' .. '(' .. '\\' .. 's' .. '\\' .. ')*console.log([\'"]🚀.*[\'"], .*)//g')
+  elseif fileExt == '.lua' then
+    updateBuffer('%s/^' .. '\\' .. '(' .. '\\' .. 's' .. '\\' .. ')*print([\'"]🚀.*[\'"], .*)//g')
   end
 end
 
@@ -949,8 +961,6 @@ vim.keymap.set('n', '<leader>cl', CustomLogger, { desc = '[C]reate [L]og' })
 vim.keymap.set('n', '<leader>c ', RemoveCustomLogs, { desc = '[C]lear[ ]logs' })
 
 vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = '[C]urrent symbol [R]ename' })
-
-require('conform').formatters_by_ft.bash = { 'beautysh' }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
