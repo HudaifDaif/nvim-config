@@ -920,9 +920,17 @@ function RemoveCustomLogs()
   local fileExt = string.match(fileName, '^.+(%..+)$')
 
   if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
-    vim.cmd ':%s/^console.log([\'"]🚀.*[\'"], .*)//g'
+    vim.cmd.bufdo('%s/^' .. '\\' .. '(' .. '\\' .. 's' .. '\\' .. ')*console.log([\'"]🚀.*[\'"], .*)//g')
   elseif fileExt == '.lua' then
-    vim.cmd ':%s/^print([\'"]🚀.*[\'"], .*)//g'
+    local ok, result = pcall(function()
+      return vim.cmd.bufdo('%s/^' .. '\\' .. '(' .. '\\' .. 's' .. '\\' .. ')*print([\'"]🚀.*[\'"], .*)//g')
+    end)
+    if ok then
+      print(result)
+    else
+      print 'No custom logs in active buffer'
+    end
+    require('conform').format { async = true }
   end
 end
 
@@ -941,6 +949,8 @@ vim.keymap.set('n', '<leader>cl', CustomLogger, { desc = '[C]reate [L]og' })
 vim.keymap.set('n', '<leader>c ', RemoveCustomLogs, { desc = '[C]lear[ ]logs' })
 
 vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = '[C]urrent symbol [R]ename' })
+
+require('conform').formatters_by_ft.bash = { 'beautysh' }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
