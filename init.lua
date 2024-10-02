@@ -920,9 +920,9 @@ function RemoveCustomLogs()
   local fileExt = string.match(fileName, '^.+(%..+)$')
 
   if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
-    vim.cmd ":%s/^console.log.'🚀.*'.//g"
+    vim.cmd ':%s/^console.log([\'"]🚀.*[\'"], .*)//g'
   elseif fileExt == '.lua' then
-    vim.cmd ":%s/^print.'🚀.*'.//g"
+    vim.cmd ':%s/^print([\'"]🚀.*[\'"], .*)//g'
   end
 end
 
