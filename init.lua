@@ -904,7 +904,7 @@ require('lazy').setup({
 -- NOTE: My config below this line
 -- -------------------------------------------------------------------------------------------------------------------------
 
--- NOTE: Functions
+-- NOTE: Functions ---------------------------------------------------------------------------------------------------------
 
 -- Create custom logs and attach to unnamed register (available on <p>) and attach symbol to 0 register
 function CustomLogger()
@@ -946,12 +946,12 @@ function RemoveCustomLogs()
   end
 end
 
--- NOTE: Config
+-- NOTE: Config ------------------------------------------------------------------------------------------------------------
 
 -- Open new terminal session within nvim.
-vim.keymap.set('n', '<leader>wt', '<cmd>tabnew | term<cr>', { desc = 'Open terminal in new tab' })
+vim.keymap.set('n', '<leader>cw', '<cmd>silent !kitty %:p:h<CR>', { desc = '[C]reate new terminal [W]indow' })
 
--- Reminder to use hjkl
+-- Reminders to use hjkl
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move left!!"<CR>')
 vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move right!!"<CR>')
 vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
