@@ -1,15 +1,21 @@
+-- Create custom logs and attach to unnamed register (available on <p>) and attach symbol to 0 register
 CustomLogger = function()
     local symbol = vim.fn.expand '<cword>'
     local lineNumber = unpack(vim.api.nvim_win_get_cursor(0))
     local fileName = vim.fn.expand '%'
     local fileExt = string.match(fileName, '^.+(%..+)$')
+    local isVariable = vim.treesitter.get_captures_at_cursor(0)[0] == 'variable'
 
-    vim.fn.setreg('0', symbol)
+    if isVariable then
+        if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
+            vim.fn.setreg('+', 'console.log("🚀 ' .. fileName .. ' @ line ' .. lineNumber .. ' - ' .. symbol .. ':", ' .. symbol .. ')')
+        elseif fileExt == '.lua' then
+            vim.fn.setreg('+', 'vim.print("🚀 ' .. fileName .. ' @ line ' .. lineNumber .. ' - ' .. symbol .. ':", ' .. symbol .. ')')
+        end
 
-    if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
-        vim.fn.setreg('+', 'console.log("🚀 ' .. fileName .. ' @ line ' .. lineNumber .. ' - ' .. symbol .. ':", ' .. symbol .. ')')
-    elseif fileExt == '.lua' then
-        vim.fn.setreg('+', 'print("🚀 ' .. fileName .. ' @ line ' .. lineNumber .. ' - ' .. symbol .. ':", ' .. symbol .. ')')
+        vim.print 'Log added to register'
+    else
+        vim.print 'No symbol selected. No log added to register'
     end
 end
 
