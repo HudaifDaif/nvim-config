@@ -37,13 +37,14 @@ return { -- Autoformat
             --
             -- You can use 'stop_after_first' to run the first available formatter from the list
             -- language = { 'prettierd', 'prettier', stop_after_first = true },
+            json = { 'prettierd', 'prettier' },
             javascript = { 'prettierd', 'prettier' },
             typescript = { 'prettierd', 'prettier', 'ts-standard' },
             javascriptreact = { 'prettierd', 'prettier' },
             typescriptreact = { 'prettierd', 'prettier', 'ts-standard' },
             bash = { 'beautysh' },
             zsh = { 'beautysh' },
-            c = { 'ast-grep' },
+            c = { 'clang-format' },
         },
     },
 }
