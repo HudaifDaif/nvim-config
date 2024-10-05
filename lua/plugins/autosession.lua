@@ -39,7 +39,7 @@ return {
 
             mappings = {
                 -- Mode can be a string or a table, e.g. {"i", "n"} for both insert and normal mode
-                delete_session = { 'i', '<C-D>' },
+                delete_session = { { 'i', 'n' }, '<C-D>' },
                 alternate_session = { 'i', '<C-S>' },
                 copy_session = { 'i', '<C-Y>' },
             },

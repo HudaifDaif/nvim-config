@@ -3,11 +3,15 @@ vim.keymap.set('n', '<C-g>', function()
     vim.cmd 'Neotree float git_status <CR>'
 end)
 vim.keymap.set('n', '<C-b>', function()
-    vim.cmd 'Neotree float buffers'
+    vim.cmd 'Neotree float buffers <CR>'
 end)
 
 -- Open new terminal session within nvim
 -- vim.keymap.set('n', '<leader>cw', '<cmd>silent !kitty %:p:h<CR>', { desc = '[C]reate new terminal [W]indow' })
+
+-- Session
+
+vim.keymap.set('n', '<leader>ms', '<cmd>SessionSearch <CR>', { desc = '[S]ession search' })
 
 -- Reminders to use hjkl
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move left!!"<CR>')
