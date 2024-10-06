@@ -4,7 +4,7 @@ CustomLogger = function()
     local lineNumber = unpack(vim.api.nvim_win_get_cursor(0))
     local fileName = vim.fn.expand '%'
     local fileExt = string.match(fileName, '^.+(%..+)$')
-    local isVariable = vim.treesitter.get_captures_at_cursor(0)[0] == 'variable'
+    local isVariable = vim.treesitter.get_captures_at_cursor(vim.api.nvim_get_current_win())[0] == 'variable'
 
     if isVariable then
         if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
