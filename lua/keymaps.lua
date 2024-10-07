@@ -8,10 +8,12 @@ end)
 
 -- Open new terminal session within nvim
 -- vim.keymap.set('n', '<leader>cw', '<cmd>silent !kitty %:p:h<CR>', { desc = '[C]reate new terminal [W]indow' })
+vim.keymap.set('n', '<leader>mt', '<cmd>tab :term <CR>', { desc = 'open [T]erminal in new tab' })
 
 -- Session
 
 vim.keymap.set('n', '<leader>ms', '<cmd>SessionSearch <CR>', { desc = '[S]ession search' })
+vim.keymap.set('n', '<leader>mn', '<cmd>SessionSave <CR>', { desc = '[C]reate new session' })
 
 -- Reminders to use hjkl
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move left!!"<CR>')
