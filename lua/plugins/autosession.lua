@@ -48,6 +48,8 @@ return {
                 control_dir = vim.fn.stdpath 'data' .. '/auto_session/', -- Auto session control dir, for control files, like alternating between two sessions with session-lens
                 control_filename = 'session_control.json', -- File name of the session control file
             },
+
+            path_display = { 'smart' },
         },
     },
 }
