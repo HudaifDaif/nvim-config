@@ -6,7 +6,7 @@ return {
     ---@module "auto-session"
     ---@type AutoSession.Config
     opts = {
-        suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' }, -- Suppress session restore/create in certain directories
+        suppressed_dirs = { '~/', '~/projects', '~/Downloads', '/', '~/repos/' }, -- Suppress session restore/create in certain directories
 
         -- log_level = 'debug',
 
@@ -41,7 +41,7 @@ return {
                 -- Mode can be a string or a table, e.g. {"i", "n"} for both insert and normal mode
                 delete_session = { { 'i', 'n' }, '<C-D>' },
                 alternate_session = { 'i', '<C-S>' },
-                copy_session = { 'i', '<C-Y>' },
+                copy_session = { { 'i', 'n' }, '<C-Y>' },
             },
 
             session_control = {
