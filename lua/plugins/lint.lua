@@ -8,8 +8,8 @@ return {
         lint.linters_by_ft.tmarkdown = { 'markdownlint' }
         lint.linters_by_ft.javascript = { 'eslint_d', 'standardjs' }
         lint.linters_by_ft.javascriptreact = { 'eslint_d', 'standardjs' }
-        lint.linters_by_ft.typescript = { 'eslint_d', 'ts-standard' }
-        lint.linters_by_ft.typescriptreact = { 'eslint_d', 'ts-standard' }
+        lint.linters_by_ft.typescript = { 'eslint_d', 'quick-lint-js' }
+        lint.linters_by_ft.typescriptreact = { 'eslint_d', 'quick-lint-js' }
         lint.linters_by_ft.c = { 'cpplint' }
 
         -- Create autocommand which carries out the actual linting
