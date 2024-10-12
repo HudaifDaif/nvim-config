@@ -13,13 +13,13 @@ vim.keymap.set('n', '<leader>mt', '<cmd>tab :term <CR>', { desc = 'open [T]ermin
 -- Session
 
 vim.keymap.set('n', '<leader>ms', '<cmd>SessionSearch <CR>', { desc = '[S]ession search' })
-vim.keymap.set('n', '<leader>mc', '<cmd>SessionSave <CR>', { desc = '[C]reate new session' })
+vim.keymap.set('n', '<leader>mn', '<cmd>SessionSave <CR>', { desc = '[C]reate new session' })
 
 -- Reminders to use hjkl
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move left!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move right!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
+-- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move left!!"<CR>')
+-- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move right!!"<CR>')
+-- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
+-- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
 
 -- Create and remove custom logs
 require 'my-plugins.custom-logger'
