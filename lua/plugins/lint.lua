@@ -10,7 +10,7 @@ return {
         lint.linters_by_ft.javascriptreact = { 'eslint_d', 'standardjs' }
         lint.linters_by_ft.typescript = { 'eslint_d', 'quick-lint-js' }
         lint.linters_by_ft.typescriptreact = { 'eslint_d', 'quick-lint-js' }
-        lint.linters_by_ft.c = { 'cpplint' }
+        lint.linters_by_ft.c = { 'trivy' }
 
         -- Create autocommand which carries out the actual linting
         -- on the specified events.
