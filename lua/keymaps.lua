@@ -10,6 +10,10 @@ end)
 -- vim.keymap.set('n', '<leader>cw', '<cmd>silent !kitty %:p:h<CR>', { desc = '[C]reate new terminal [W]indow' })
 vim.keymap.set('n', '<leader>mt', '<cmd>tab :term <CR>', { desc = 'open [T]erminal in new tab' })
 
+-- Lazygit
+
+vim.keymap.set('n', '<leader>mg', '<cmd>tabnew | term lazygit <CR>', { desc = 'open lazy[G]it in new tab' })
+
 -- Session
 
 vim.keymap.set('n', '<leader>ms', '<cmd>SessionSearch <CR>', { desc = '[S]ession search' })
