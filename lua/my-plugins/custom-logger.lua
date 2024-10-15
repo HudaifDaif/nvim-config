@@ -7,10 +7,6 @@ CustomLogger = function()
     local capture = vim.treesitter.get_captures_at_cursor(vim.api.nvim_get_current_win())
     local isVariable = table.maxn(capture) == 1 and capture[1] == 'variable'
 
-    vim.print(capture)
-    vim.print(capture[1])
-    vim.print(table.maxn(capture))
-
     if isVariable then
         if fileExt == '.ts' or fileExt == '.tsx' or fileExt == '.js' or fileExt == '.jsx' then
             vim.fn.setreg('+', 'console.log("🚀 ' .. fileName .. ' @ line ' .. lineNumber .. ' - ' .. symbol .. ':", ' .. symbol .. ')')
